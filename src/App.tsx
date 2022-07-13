@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/*
+- Finish up the button Component. Add ghost/link styles. 
+  - Add disabled state
+  - Add option for icons
 
-function App() {
+- Try to implmenent a toggle component.
+- If you still have time, go to the innput component */
+
+
+import React, { Component } from "react";
+import styled from "styled-components";
+import "./App.css";
+import { IconFacebookLogo } from "./Common/Icon";
+import Button from "./Common/Button"; 
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Button variant="primary"><IconFacebookLogo />test</Button>
+      
+      <p>test</p>
+      <h1>test</h1>
+    </>
   );
-}
+};
 
 export default App;
