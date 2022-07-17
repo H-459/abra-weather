@@ -8,9 +8,10 @@
 
 import React, { Component, useState } from "react";
 import styled from "styled-components/macro";
-import { IconFacebookLogo } from "./Common/Icon";
+import { IconFacebookLogo, IconMoonDark, IconSunDark } from "./Common/Icon";
 import Button from "./Common/Button";
 import Switch from "./Common/Switch";
+import Input from "./Input";
 
 const Container = styled.div`
   background-color: #b7b7b7;
@@ -22,7 +23,9 @@ const ButtonStyle = styled.div`
   align-items: center;
 `;
 const App: React.FC = () => {
-  const [toggle, setToggle] = useState<boolean>(false);
+  const [toggle, setToggle] = useState<boolean>(true);
+  const [text, setText] = useState<string>("");
+
   console.log(toggle);
   return (
     <Container>
@@ -41,17 +44,25 @@ const App: React.FC = () => {
       <Button onClick={() => console.log("clicked")} variant="white">
         test
       </Button>
-
       <p>test</p>
       <h1>test</h1>
-
       <Switch
         id={"degree-id"}
         value={toggle}
+        left={<IconMoonDark />}
+        right={<IconSunDark />}
         onChange={() => {
           setToggle(!toggle);
         }}
       ></Switch>
+      <Input
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+        title={"Email account"}
+        placeholder="6 charaters and digit numbers blabla"
+      ></Input>
     </Container>
   );
 };

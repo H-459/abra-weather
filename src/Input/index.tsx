@@ -1,0 +1,22 @@
+import * as S from "./styles";
+import { InputProps } from "./types";
+
+const Input: React.FC<InputProps> = ({
+  title,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+  error,
+}) => {
+  return (
+    <>
+      <S.InputWrapper error={error}>
+        <S.Title>{title}</S.Title>
+        <S.TextInput value={value} onChange={onChange} type={type} placeholder={placeholder} />
+      </S.InputWrapper>
+    </>
+  );
+};
+
+export default Input;
