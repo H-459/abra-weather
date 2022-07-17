@@ -15,6 +15,7 @@ const Input: React.FC<InputProps> = ({
         <S.Title>{title}</S.Title>
         <S.TextInput value={value} onChange={onChange} type={type} placeholder={placeholder} />
       </S.InputWrapper>
+      { error && <S.Error>{error}</S.Error>}
     </>
   );
 };

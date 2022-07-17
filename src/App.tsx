@@ -55,16 +55,20 @@ const App: React.FC = () => {
           setToggle(!toggle);
         }}
       ></Switch>
+
       <Input
         value={text}
         onChange={(e) => {
           setText(e.target.value);
         }}
         title={"Email account"}
+        // error={"this is an error"}
         placeholder="6 charaters and digit numbers blabla"
       ></Input>
+
     </Container>
   );
 };
+
 
 export default App;
