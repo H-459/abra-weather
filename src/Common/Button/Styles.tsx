@@ -65,7 +65,8 @@ export const ButtonWrapper = styled.button<ButtonProps>`
       default:
         return getPrimaryStyle();
     }
-  }}/* &:disabled~${TextContainer} {
-      opacity: 0.4;
-    } */
+  }}
+  &:disabled ${TextContainer} {
+    opacity: 0.4;
+  }
 `;
