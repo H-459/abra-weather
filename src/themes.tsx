@@ -6,7 +6,8 @@ export interface Theme {
   buttonDefaultSize: string;
 }
 
-const lightModeTheme = {
+export const lightModeTheme = {
+  name: "Light",
   black: "#222222",
   white: "#ffffff",
   primary: "#48bae4",
@@ -15,9 +16,11 @@ const lightModeTheme = {
 };
 
 const darkMode = {
+  name: "Dark",
+  buttonDefaultSize: "2.8rem",
   primary: "#1a2b55",
 };
 
-const darkModeTheme = { ...lightModeTheme, ...darkMode };
+export const darkModeTheme = { ...lightModeTheme, ...darkMode };
 
 export default lightModeTheme;
