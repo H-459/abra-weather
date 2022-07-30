@@ -11,10 +11,19 @@ import styled from "styled-components/macro";
 import { IconFacebookLogo, IconMoonDark, IconSunDark } from "./Common/Icon";
 import Button from "./Common/Button";
 import Switch from "./Common/Switch";
-import Input from "./Input";
+import Input from "./Common/Input";
+import customMedia from "./Utils/mediaQuery";
 
 const Container = styled.div`
   background-color: #b7b7b7;
+  ${customMedia.greaterThan("desktop")`
+    background-color: red;
+  `};
+
+  ${customMedia.between("tablet", "desktop")`
+    background-color: green;
+  `};
+
   padding: 10px;
 `;
 const ButtonStyle = styled.div`
@@ -65,10 +74,8 @@ const App: React.FC = () => {
         // error={"this is an error"}
         placeholder="6 charaters and digit numbers blabla"
       ></Input>
-
     </Container>
   );
 };
-
 
 export default App;
