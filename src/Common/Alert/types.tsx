@@ -5,4 +5,5 @@ export type SeverityOptions = "success" | "error";
 export interface AlertProps {
   severity: SeverityOptions;
   children?: React.ReactNode; 
+  className?: string;
 }
