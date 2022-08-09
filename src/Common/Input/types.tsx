@@ -3,7 +3,7 @@ import React from "react";
 export type InputTypes = "text" | "password";
 
 export interface InputProps {
-  value: string;
+  value?: string;
   placeholder?: string;
   title?: string;
   error?: string;
