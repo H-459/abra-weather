@@ -33,7 +33,6 @@ const PlayGroundPage = () => {
   const [toggle, setToggle] = useState<boolean>(true);
   const [text, setText] = useState<string>("");
 
-  console.log(toggle);
   return (
     <Container>
       <Button onClick={() => console.log("clicked")} disabled variant="primary">
@@ -63,7 +62,7 @@ const PlayGroundPage = () => {
         }}
       ></Switch>
 
-      <Input
+      {/* <Input
         value={text}
         onChange={(e) => {
           setText(e.target.value);
@@ -72,7 +71,7 @@ const PlayGroundPage = () => {
         // error={"this is an error"}
         placeholder="6 charaters and digit numbers blabla"
       ></Input>
-      <p>Error</p>
+      <p>Error</p> */}
       <NewAlert severity="error">
         Connection is lost. Please check your connection device and try again.
       </NewAlert>

@@ -9,4 +9,5 @@ export interface InputProps {
   error?: string;
   type?: InputTypes;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
