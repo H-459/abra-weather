@@ -24,6 +24,8 @@ const getLinkStyle = () => {
     color: #222;
     text-decoration: underline;
     font-weight: normal;
+    padding: 0px 0px;
+
 
     `;
 };

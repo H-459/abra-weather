@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IconFacebookLogo, IconGoogleLogo } from "../../Common/Icon";
 import { setConstantValue } from "typescript";
+import Alert from "../../Common/Alert";
 
 interface FormData {
   email: string;
@@ -44,6 +45,10 @@ const LoginPage = () => {
       <S.Modal>
         <S.Title>Log in</S.Title>
         <S.InputWrapper>
+          <Alert severity="error">
+            Connection is lost. Please check your connection device and try
+            again.
+          </Alert>
           <S.EmailInput
             {...register("email")}
             placeholder="example@example.com"
@@ -57,15 +62,16 @@ const LoginPage = () => {
             {...register("password")}
             placeholder="6 characters and digit numbers"
             title="Password"
-            error={errors?.password?.message}
+            type="password"
+            error={errors.password?.message}
             onChange={(e) => {
               setValue("password", e.target.value);
             }}
           />
+          <S.LoginButton variant="primary" onClick={handleSubmit(onSubmit)}>
+            Log in
+          </S.LoginButton>
         </S.InputWrapper>
-        <S.LoginButton variant="primary" onClick={handleSubmit(onSubmit)}>
-          Log in
-        </S.LoginButton>
         <S.Seperator>
           <S.Line />
           <S.LoginWith>Or log in with</S.LoginWith>

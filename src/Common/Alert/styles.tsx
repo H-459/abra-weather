@@ -9,7 +9,7 @@ export const AlertWrapper = styled.div<Props>`
   background-color: #ffe7e7;
   padding: 24px;
   font-family: Overpass;
-  font-size: 14px;
+  font-size: 1.4rem;
   line-height: 1.25;
   display: flex;
   gap: 16px;

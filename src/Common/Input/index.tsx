@@ -4,7 +4,7 @@ import { InputProps } from "./types";
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ title, type = "text", value, onChange, placeholder, error }) => {
     return (
-      <>
+      <S.InputContainer>
         <S.InputWrapper error={error}>
           <S.Title>{title}</S.Title>
           <S.TextInput
@@ -15,7 +15,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           />
         </S.InputWrapper>
         {error && <S.Error>{error}</S.Error>}
-      </>
+      </S.InputContainer>
     );
   }
 );
