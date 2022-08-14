@@ -5,5 +5,8 @@ export interface NavBarItem {
     inactive?: JSX.Element;
 }
 export interface NavBarProps {
+    className?: string;
     items: NavBarItem[];
+    selectedItem: string;
+    onClick: (id: string) => void;
 };

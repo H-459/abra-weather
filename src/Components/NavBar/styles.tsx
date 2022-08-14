@@ -1,22 +1,33 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Button from "../../Common/Button";
 
 export const NavBarWrapper = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 15px;
   height: 100%;
+  justify-content: center;
 `;
 
-export const NavBarItemWrapper = styled.div``;
-
+export const NavBarItemWrapper = styled.div`
+  position: relative;
+  height: 100%;
+  display: flex;
+`;
 export const NavBarButton = styled(Button)`
   span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    padding: 0;
-    border: none;
+  padding: 0;
+  border: none;
+`;
+
+export const ActiveItem = styled.div`
+  height: 5px;
+  background-color: #fff;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
 `;

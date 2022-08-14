@@ -1,3 +1,6 @@
+import { useState } from "react";
+import * as S from "./styles";
+
 import {
   IconFavoriteFull,
   IconFavoriteOutline,
@@ -7,7 +10,8 @@ import {
 import NavBar from "../NavBar";
 import { NavBarItem } from "../NavBar/types";
 import { HeaderWrapper } from "./styles";
-
+import logo from "../../Images/logo.svg";
+import SearchBox from "../../Common/SearchBox";
 const Header = () => {
   const navBarItems: NavBarItem[] = [
     {
@@ -23,9 +27,27 @@ const Header = () => {
       text: "Favorites",
     },
   ];
+
+  const [currentSelectedItem, setCurrentSelectedItem] = useState<string>(
+    navBarItems[0].id
+  );
   return (
     <HeaderWrapper>
-      <NavBar items={navBarItems}></NavBar>
+      <S.LeftSideContainer>
+        <S.LogoContainer>
+          <S.Logo src={logo} />
+        </S.LogoContainer>
+        <S.StyledNavBar
+          items={navBarItems}
+          onClick={(id) => {
+            setCurrentSelectedItem(id);
+          }}
+          selectedItem={currentSelectedItem}
+        ></S.StyledNavBar>
+      </S.LeftSideContainer>
+      <S.SearchBoxContainer>
+        <S.StyledSearchBox></S.StyledSearchBox>
+      </S.SearchBoxContainer>
     </HeaderWrapper>
   );
 };
