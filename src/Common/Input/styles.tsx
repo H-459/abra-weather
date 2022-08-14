@@ -3,6 +3,10 @@ import styled from "styled-components/macro";
 interface Props {
   error?: string;
 }
+
+export const InputContainer = styled.div`
+  position: relative;
+`;
 export const InputWrapper = styled.div<Props>`
   padding: 14px 24px;
   border-radius: 10px;
@@ -12,9 +16,12 @@ export const InputWrapper = styled.div<Props>`
   ${(props) =>
     props.error
       ? `
-    border: solid 1px #f0274b;
+      background-color: #fff;
+
+      border: solid 1px #f0274b;
     ${Title} {
       color: #f0274b;
+}
      } `
       : `
     :focus-within {
@@ -44,7 +51,8 @@ export const TextInput = styled.input`
 `;
 
 export const Error = styled.p`
-    font-family: inherit;
+  position: absolute;
+  font-family: inherit;
   font-size: 1.4rem;
   line-height: 1.25;
   color: #f0274b;

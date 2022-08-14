@@ -11,6 +11,7 @@ import { Route, Routes } from "react-router-dom";
 import styled from "styled-components/macro";
 import PlayGroundPage from "./Pages/PlayGroundPage";
 import LoginPage from "./Pages/LoginPage";
+import Layout from "./Pages/Layout";
 
 const BackgroundStyle = styled.div`
   background-image: linear-gradient(241deg, #47bfdf, #4a91ff),
@@ -23,7 +24,7 @@ const App: React.FC = () => {
       <BackgroundStyle>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          {/* <Route path="/" element={<PlayGroundPage />} /> */}
+          <Route path="/" element={<Layout />} />
         </Routes>
       </BackgroundStyle>
     </>

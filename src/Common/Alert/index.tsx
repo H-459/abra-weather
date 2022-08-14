@@ -4,7 +4,6 @@ import CheckMarkIcon from "./Icons/check-v.svg";
 import NoticeIcon from "./Icons/info-circle.svg";
 
 const Alert: React.FC<AlertProps> = ({ className, severity, children }) => {
-  console.log(className);
   return (
     <S.AlertWrapper className={className} severity={severity}>
       {severity === "error" ? 

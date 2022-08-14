@@ -1,10 +1,12 @@
 import * as S from "./styles";
 import logo from "../../Images/logo.svg";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IconFacebookLogo, IconGoogleLogo } from "../../Common/Icon";
 import { setConstantValue } from "typescript";
+import Alert from "../../Common/Alert";
+import Input from "../../Common/Input";
 
 interface FormData {
   email: string;
@@ -26,16 +28,20 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
+  console.log("errors:", errors);
+  console.log({ ...register("email") });
   const onSubmit = (data: any) => {
-    console.log(data);
     // handleSubmit(data);
   };
+
+  const { onChange, onBlur, ref } = register("email");
   return (
     <S.LoginPageWrapper>
       <S.Header>
@@ -44,28 +50,47 @@ const LoginPage = () => {
       <S.Modal>
         <S.Title>Log in</S.Title>
         <S.InputWrapper>
-          <S.EmailInput
-            {...register("email")}
-            placeholder="example@example.com"
-            title="Email Account"
-            error={errors?.email?.message}
-            onChange={(e) => {
-              setValue("email", e.target.value);
-            }}
+          <Alert severity="error">
+            Connection is lost. Please check your connection device and try
+            again.
+          </Alert>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                ref={ref}
+                placeholder="example@example.com"
+                title="Email Account"
+                error={errors?.email?.message}
+              />
+            )}
           />
-          <S.PasswordInput
-            {...register("password")}
-            placeholder="6 characters and digit numbers"
-            title="Password"
-            error={errors?.password?.message}
-            onChange={(e) => {
-              setValue("password", e.target.value);
-            }}
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                ref={ref}
+                placeholder="6 characters and digit numbers"
+                title="Password"
+                type="password"
+                error={errors?.password?.message}
+              />
+            )}
           />
+
+          <S.LoginButton variant="primary" onClick={handleSubmit(onSubmit)}>
+            Log in
+          </S.LoginButton>
         </S.InputWrapper>
-        <S.LoginButton variant="primary" onClick={handleSubmit(onSubmit)}>
-          Log in
-        </S.LoginButton>
         <S.Seperator>
           <S.Line />
           <S.LoginWith>Or log in with</S.LoginWith>
