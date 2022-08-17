@@ -12,20 +12,23 @@ import styled from "styled-components/macro";
 import PlayGroundPage from "./Pages/PlayGroundPage";
 import LoginPage from "./Pages/LoginPage";
 import Layout from "./Pages/Layout";
+import { AuthenticationProvider } from "./Services/Authentication";
 
 const BackgroundStyle = styled.div`
   background-image: linear-gradient(241deg, #47bfdf, #4a91ff),
     linear-gradient(to bottom, #fff, #fff);
-    height: 100vh;
+  height: 100vh;
 `;
 const App: React.FC = () => {
   return (
     <>
       <BackgroundStyle>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<Layout />} />
-        </Routes>
+        <AuthenticationProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<Layout />} />
+          </Routes>
+        </AuthenticationProvider>
       </BackgroundStyle>
     </>
   );

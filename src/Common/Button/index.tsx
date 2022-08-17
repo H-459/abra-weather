@@ -8,7 +8,6 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   className,
 }) => {
-  console.log(className);
   return (
     <>
       <S.ButtonWrapper

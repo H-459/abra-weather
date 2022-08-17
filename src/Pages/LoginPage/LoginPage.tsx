@@ -7,6 +7,8 @@ import { IconFacebookLogo, IconGoogleLogo } from "../../Common/Icon";
 import { setConstantValue } from "typescript";
 import Alert from "../../Common/Alert";
 import Input from "../../Common/Input";
+import { useState } from "react";
+import { useAuthentication } from "../../Services/Authentication";
 
 interface FormData {
   email: string;
@@ -26,22 +28,18 @@ const schema = yup
   .required();
 const LoginPage = () => {
   const {
-    register,
     handleSubmit,
     control,
-    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  console.log("errors:", errors);
-  console.log({ ...register("email") });
-  const onSubmit = (data: any) => {
-    // handleSubmit(data);
+  const [login, autenticationError] = useAuthentication();
+  const onSubmit = async (data: any) => {
+    login(data.email, data.password);
   };
 
-  const { onChange, onBlur, ref } = register("email");
   return (
     <S.LoginPageWrapper>
       <S.Header>
@@ -50,10 +48,7 @@ const LoginPage = () => {
       <S.Modal>
         <S.Title>Log in</S.Title>
         <S.InputWrapper>
-          <Alert severity="error">
-            Connection is lost. Please check your connection device and try
-            again.
-          </Alert>
+          {autenticationError && <Alert severity="error">{autenticationError}</Alert>}
           <Controller
             control={control}
             name="email"

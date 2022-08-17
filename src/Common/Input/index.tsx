@@ -3,7 +3,6 @@ import * as S from "./styles";
 import { InputProps } from "./types";
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ title, type = "text", value, onChange, onBlur, placeholder, error, ...props }) => {
-    console.log(props);
     return (
       <S.InputContainer>
         <S.InputWrapper error={error}>
