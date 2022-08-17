@@ -2,7 +2,7 @@ import { generateMedia } from "styled-media-query";
 
 const customMedia = generateMedia({
     desktop: "1920px",
-    tablet: "1280px",
+    tablet: "1525px",
     mobile: "900px"
 });
 

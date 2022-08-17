@@ -2,10 +2,16 @@ import { useState } from "react";
 import * as S from "./styles";
 
 import {
+  IconCelsuis,
+  IconFahrenheit,
   IconFavoriteFull,
   IconFavoriteOutline,
   IconHomeFull,
   IconHomeOutline,
+  IconLogout,
+  IconMap,
+  IconMoonDark,
+  IconSunDark,
 } from "../../Common/Icon";
 import NavBar from "../NavBar";
 import { NavBarItem } from "../NavBar/types";
@@ -48,6 +54,32 @@ const Header = () => {
       <S.SearchBoxContainer>
         <S.StyledSearchBox></S.StyledSearchBox>
       </S.SearchBoxContainer>
+      <S.RightSideContainer>
+        <S.SwitchToMapButton variant="link" onClick={() => {}}>
+          <IconMap />
+          <span>Switch to map</span>
+        </S.SwitchToMapButton>
+        <S.TogglesWrapper>
+          <S.TemperatureSwitch
+            id={"tempeature-switch"}
+            left={<IconFahrenheit />}
+            right={<IconCelsuis />}
+            value={true}
+            onChange={() => {}}
+          />
+          <S.DarkModeSwitch
+            id={"darkmode-switch"}
+            left={<IconSunDark />}
+            right={<IconMoonDark />}
+            value={true}
+            onChange={() => {}}
+          />
+        </S.TogglesWrapper>
+        <S.LogoutButton variant="link" onClick={() => {}}>
+          <IconLogout />
+          <span>Log out</span>
+        </S.LogoutButton>
+      </S.RightSideContainer>
     </HeaderWrapper>
   );
 };
