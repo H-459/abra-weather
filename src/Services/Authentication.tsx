@@ -1,17 +1,56 @@
-import { createContext, ReactElement, useContext, useEffect, useState } from "react";
-import { abraLogin } from "./AbraAPI";
+import axios, { AxiosResponse } from "axios";
+import {
+  createContext,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { convertToObject } from "typescript";
+import useLocalStorage from "../hooks/useLocalStorage";
+import {
+  abraCreateInterceptor,
+  abraEjectInterceptor,
+  abraLogin,
+} from "./AbraAPI";
 
 const AuthenticationContext = createContext<any>(undefined);
 
 export const AuthenticationProvider: React.FC<{ children: ReactElement }> = ({
   children,
 }) => {
-  const [userToken, setUserToken] = useState<string | undefined>(undefined);
-  const api = { setUserToken, userToken };
+  const [userToken, setUserToken] = useLocalStorage<string | undefined>(
+    "token",
+    undefined
+  );
+  console.log("token = ", userToken);
+  const [lastLocation, setLastLocation] =
+    useState<string | undefined>(undefined);
 
-  useEffect( () => {
-    console.log(userToken);
-  }, [userToken]);
+  const api = { setUserToken, userToken, lastLocation };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const resultInterceptor = (response: AxiosResponse) => {
+    return response;
+  };
+
+  const errorInterceptor = (error: any) => {
+    if (error.response.status === 401) {
+      setLastLocation(location.pathname);
+      navigate("/login");
+    }
+    return Promise.reject(error);
+  };
+  useEffect(() => {
+    const interceptorId = abraCreateInterceptor(
+      resultInterceptor,
+      errorInterceptor
+    );
+
+    return () => abraEjectInterceptor(interceptorId);
+  }, [location, lastLocation, navigate]);
+  useEffect(() => {}, [userToken]);
   return (
     <AuthenticationContext.Provider value={api}>
       {children}
@@ -19,7 +58,10 @@ export const AuthenticationProvider: React.FC<{ children: ReactElement }> = ({
   );
 };
 
-export const useAuthentication: any = () => {
+export const useAuthentication: any = (
+  onLogin?: (lastLocation: string) => void,
+  onLogout?: () => void
+) => {
   const [authenticationError, setAuthenticationError] =
     useState<string | undefined>(undefined);
   const ctx = useContext(AuthenticationContext);
@@ -34,6 +76,8 @@ export const useAuthentication: any = () => {
     try {
       setAuthenticationError(undefined);
       response = await abraLogin(email, password);
+      ctx.setUserToken(response?.data.access_token);
+      if (onLogin) onLogin(ctx.lastLocation);
     } catch (e: any) {
       let errorMessage: string = "";
       const errorResponse = e.response.data;
@@ -44,9 +88,13 @@ export const useAuthentication: any = () => {
 
       setAuthenticationError(errorMessage);
     }
-
-    ctx.setUserToken(response?.data.access_token);
   };
 
-  return [login, authenticationError];
+  const logout = () => {
+    setAuthenticationError(undefined);
+    ctx.setUserToken(undefined);
+    if (onLogout) onLogout();
+  };
+
+  return { login, logout, authenticationError };
 };

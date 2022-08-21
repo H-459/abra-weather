@@ -27,6 +27,8 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Layout />} />
+            <Route path="/favorites" element={<Layout />} />
+
           </Routes>
         </AuthenticationProvider>
       </BackgroundStyle>

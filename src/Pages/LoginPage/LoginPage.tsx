@@ -9,6 +9,7 @@ import Alert from "../../Common/Alert";
 import Input from "../../Common/Input";
 import { useState } from "react";
 import { useAuthentication } from "../../Services/Authentication";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   email: string;
@@ -35,7 +36,14 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const [login, autenticationError] = useAuthentication();
+  const navigate = useNavigate();
+  const { login, logout, authenticationError } = useAuthentication(
+    (lastLocation: string) => {
+      if (!lastLocation) navigate("/");
+      else navigate(lastLocation);
+    }
+  );
+
   const onSubmit = async (data: any) => {
     login(data.email, data.password);
   };
@@ -48,7 +56,9 @@ const LoginPage = () => {
       <S.Modal>
         <S.Title>Log in</S.Title>
         <S.InputWrapper>
-          {autenticationError && <Alert severity="error">{autenticationError}</Alert>}
+          {authenticationError && (
+            <Alert severity="error">{authenticationError}</Alert>
+          )}
           <Controller
             control={control}
             name="email"
