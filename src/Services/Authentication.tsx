@@ -6,13 +6,14 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useMutation } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { convertToObject } from "typescript";
 import useLocalStorage from "../hooks/useLocalStorage";
 import {
   abraCreateInterceptor,
   abraEjectInterceptor,
   abraLogin,
+  Credentials,
 } from "./AbraAPI";
 
 const AuthenticationContext = createContext<any>(undefined);
@@ -31,18 +32,20 @@ export const AuthenticationProvider: React.FC<{ children: ReactElement }> = ({
   const api = { setUserToken, userToken, lastLocation };
   const navigate = useNavigate();
   const location = useLocation();
-  const resultInterceptor = (response: AxiosResponse) => {
-    return response;
-  };
 
-  const errorInterceptor = (error: any) => {
-    if (error.response.status === 401) {
-      setLastLocation(location.pathname);
-      navigate("/login");
-    }
-    return Promise.reject(error);
-  };
   useEffect(() => {
+    const resultInterceptor = (response: AxiosResponse) => {
+      return response;
+    };
+
+    const errorInterceptor = (error: any) => {
+      if (error.response.status === 401) {
+        setLastLocation(location.pathname);
+        navigate("/login");
+      }
+      return Promise.reject(error);
+    };
+
     const interceptorId = abraCreateInterceptor(
       resultInterceptor,
       errorInterceptor
@@ -50,7 +53,7 @@ export const AuthenticationProvider: React.FC<{ children: ReactElement }> = ({
 
     return () => abraEjectInterceptor(interceptorId);
   }, [location, lastLocation, navigate]);
-  useEffect(() => {}, [userToken]);
+
   return (
     <AuthenticationContext.Provider value={api}>
       {children}
@@ -71,23 +74,32 @@ export const useAuthentication: any = (
       "useAuthentication must be used within the AutenticationProvider"
     );
   }
-  const login = async (email: string, password: string) => {
-    let response = undefined;
-    try {
+
+  const loginMutation = useMutation(
+    ({ email, password }: Credentials) => {
       setAuthenticationError(undefined);
-      response = await abraLogin(email, password);
-      ctx.setUserToken(response?.data.access_token);
-      if (onLogin) onLogin(ctx.lastLocation);
-    } catch (e: any) {
-      let errorMessage: string = "";
-      const errorResponse = e.response.data;
+      return abraLogin(email, password);
+    },
+    {
+      onSuccess: (response) => {
+        ctx.setUserToken(response?.data.access_token);
+        if (onLogin) onLogin(ctx.lastLocation);
+      },
+      onError: (e: any) => {
+        let errorMessage: string = "";
+        const errorResponse = e.response.data;
 
-      for (let item in errorResponse) {
-        errorMessage += errorResponse[item] + " ";
-      }
+        for (let item in errorResponse) {
+          errorMessage += errorResponse[item] + " ";
+        }
 
-      setAuthenticationError(errorMessage);
+        setAuthenticationError(errorMessage);
+      },
     }
+  );
+
+  const login = async (email: string, password: string) => {
+    loginMutation.mutate({ email, password });
   };
 
   const logout = () => {
@@ -96,5 +108,10 @@ export const useAuthentication: any = (
     if (onLogout) onLogout();
   };
 
-  return { login, logout, authenticationError };
+  return {
+    login,
+    logout,
+    isLoginInProgress: loginMutation.isLoading,
+    authenticationError,
+  };
 };

@@ -10,6 +10,7 @@ import Input from "../../Common/Input";
 import { useState } from "react";
 import { useAuthentication } from "../../Services/Authentication";
 import { useNavigate } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
 interface FormData {
   email: string;
@@ -37,12 +38,11 @@ const LoginPage = () => {
   });
 
   const navigate = useNavigate();
-  const { login, logout, authenticationError } = useAuthentication(
-    (lastLocation: string) => {
+  const { login, logout, isLoginInProgress, authenticationError } =
+    useAuthentication((lastLocation: string) => {
       if (!lastLocation) navigate("/");
       else navigate(lastLocation);
-    }
-  );
+    });
 
   const onSubmit = async (data: any) => {
     login(data.email, data.password);
@@ -92,8 +92,12 @@ const LoginPage = () => {
             )}
           />
 
-          <S.LoginButton variant="primary" onClick={handleSubmit(onSubmit)}>
-            Log in
+          <S.LoginButton disabled={isLoginInProgress} variant="primary" onClick={handleSubmit(onSubmit)}>
+            {isLoginInProgress ? (
+              <TailSpin width="22" height="22" color="#fff"></TailSpin>
+            ) : (
+              <span>Log in</span>
+            )}
           </S.LoginButton>
         </S.InputWrapper>
         <S.Seperator>

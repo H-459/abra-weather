@@ -13,24 +13,27 @@ import PlayGroundPage from "./Pages/PlayGroundPage";
 import LoginPage from "./Pages/LoginPage";
 import Layout from "./Pages/Layout";
 import { AuthenticationProvider } from "./Services/Authentication";
-
+import { QueryClient, QueryClientProvider } from "react-query";
 const BackgroundStyle = styled.div`
   background-image: linear-gradient(241deg, #47bfdf, #4a91ff),
     linear-gradient(to bottom, #fff, #fff);
   height: 100vh;
 `;
+
+const queryClient = new QueryClient();
 const App: React.FC = () => {
   return (
     <>
       <BackgroundStyle>
-        <AuthenticationProvider>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<Layout />} />
-            <Route path="/favorites" element={<Layout />} />
-
-          </Routes>
-        </AuthenticationProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthenticationProvider>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/" element={<Layout />} />
+              <Route path="/favorites" element={<Layout />} />
+            </Routes>
+          </AuthenticationProvider>
+        </QueryClientProvider>
       </BackgroundStyle>
     </>
   );
