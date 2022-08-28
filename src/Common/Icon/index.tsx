@@ -9,6 +9,12 @@ import { ReactComponent as IconFavoriteFull }  from "./Icons/fav-full.svg";
 import { ReactComponent as IconFavoriteOutline } from "./Icons/fav-outline.svg";
 import { ReactComponent as IconHomeFull } from "./Icons/home-full.svg";
 import { ReactComponent as IconHomeOutline } from "./Icons/home-outline.svg";
+import { ReactComponent as IconMap} from "./Icons/map.svg";
+import { ReactComponent as IconCelsuis} from "./Icons/c_.svg";
+import { ReactComponent as IconFahrenheit} from "./Icons/f_.svg";
+import { ReactComponent as IconLogout} from "./Icons/log-out.svg";
+
+
 
 
 interface IconProp {
@@ -37,5 +43,9 @@ export {
   IconFavoriteOutline,
   IconHomeFull,
   IconHomeOutline,
-  ActiveIcon
+  ActiveIcon,
+  IconMap,
+  IconCelsuis,
+  IconFahrenheit,
+  IconLogout
 };

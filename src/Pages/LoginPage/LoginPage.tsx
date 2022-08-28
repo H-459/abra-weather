@@ -7,6 +7,10 @@ import { IconFacebookLogo, IconGoogleLogo } from "../../Common/Icon";
 import { setConstantValue } from "typescript";
 import Alert from "../../Common/Alert";
 import Input from "../../Common/Input";
+import { useState } from "react";
+import { useAuthentication } from "../../Services/Authentication";
+import { useNavigate } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
 interface FormData {
   email: string;
@@ -26,22 +30,24 @@ const schema = yup
   .required();
 const LoginPage = () => {
   const {
-    register,
     handleSubmit,
     control,
-    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  console.log("errors:", errors);
-  console.log({ ...register("email") });
-  const onSubmit = (data: any) => {
-    // handleSubmit(data);
+  const navigate = useNavigate();
+  const { login, logout, isLoginInProgress, authenticationError } =
+    useAuthentication((lastLocation: string) => {
+      if (!lastLocation) navigate("/");
+      else navigate(lastLocation);
+    });
+
+  const onSubmit = async (data: any) => {
+    login(data.email, data.password);
   };
 
-  const { onChange, onBlur, ref } = register("email");
   return (
     <S.LoginPageWrapper>
       <S.Header>
@@ -50,10 +56,9 @@ const LoginPage = () => {
       <S.Modal>
         <S.Title>Log in</S.Title>
         <S.InputWrapper>
-          <Alert severity="error">
-            Connection is lost. Please check your connection device and try
-            again.
-          </Alert>
+          {authenticationError && (
+            <Alert severity="error">{authenticationError}</Alert>
+          )}
           <Controller
             control={control}
             name="email"
@@ -87,8 +92,12 @@ const LoginPage = () => {
             )}
           />
 
-          <S.LoginButton variant="primary" onClick={handleSubmit(onSubmit)}>
-            Log in
+          <S.LoginButton disabled={isLoginInProgress} variant="primary" onClick={handleSubmit(onSubmit)}>
+            {isLoginInProgress ? (
+              <TailSpin width="22" height="22" color="#fff"></TailSpin>
+            ) : (
+              <span>Log in</span>
+            )}
           </S.LoginButton>
         </S.InputWrapper>
         <S.Seperator>

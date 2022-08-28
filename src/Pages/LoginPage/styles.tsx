@@ -100,6 +100,8 @@ export const PasswordInput = styled(Input)``;
 export const LoginButton = styled(Button)`
   margin-top: 8px;
   width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Seperator = styled.div`
