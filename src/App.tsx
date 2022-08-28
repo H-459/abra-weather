@@ -30,7 +30,7 @@ const App: React.FC = () => {
   return (
     <>
       <BackgroundStyle>
-        <Clouds numClouds={30}></Clouds>
+        <Clouds numClouds={25}></Clouds>
         <QueryClientProvider client={queryClient}>
           <AuthenticationProvider>
             <Routes>

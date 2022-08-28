@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { number } from "yup/lib/locale";
 import cloudImage from "./Images/cloud.svg";
 import * as S from "./styles";
+import { MAX_CLOUD_SPEED, MIN_CLOUD_SPEED } from "./types";
 
 interface CloudsProp {
   numClouds: number;
@@ -20,7 +21,7 @@ const Clouds: React.FC<CloudsProp> = ({ numClouds }) => {
       const cloud = {
         positionY: Math.random() * 100,
         delayTime: Math.random() * 10,
-        speed: (Math.random() * 15 ) + 5,
+        speed: (Math.random() * MAX_CLOUD_SPEED ) + MIN_CLOUD_SPEED,
       };
       newClouds.push(cloud);
     }
