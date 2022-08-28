@@ -1,14 +1,17 @@
 import styled, { keyframes } from "styled-components/macro";
 
 const cloudAnimation = keyframes`
-    0% { left: 500px}
-    100% { left: 0px}
+    0% { left: 100%;}
+    100% { left: -201px}
 `
 
-export const Cloud = styled.img`
+interface Props {
+    positionY: number;
+}
+export const Cloud = styled.img<Props>`
     position: absolute;
-    top: 500px;
-    animation: ${cloudAnimation} 5s linear;
+    top: ${(props) => props.positionY}%;
+    animation: ${cloudAnimation} 5s linear infinite;
     z-index: -1;
 `   
 export const CloudsWrapper = styled.div`

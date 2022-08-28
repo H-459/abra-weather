@@ -22,6 +22,7 @@ const BackgroundStyle = styled.div`
   height: 100vh;
   position: relative;
   z-index: 0;
+  overflow: hidden;
 `;
 
 const queryClient = new QueryClient();
