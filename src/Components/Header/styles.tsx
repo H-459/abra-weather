@@ -11,6 +11,7 @@ export const HeaderWrapper = styled.div`
   background-color: #48bae4;
   height: 94px;
   display: flex;
+  z-index: 5;
   align-items: center;
   padding: 0px 70px;
   ${media.between("mobile", "tablet")`
